@@ -1,11 +1,15 @@
 
-import { Cat } from "@/_game/objects/cat/cat";
+import { GetTree } from "@/_game/engine/objects/ObjectTree";
+import { Cat } from "@/_game/objects/cat/Cat";
 
 export default function HomeScreen() {
-  const myCat = new Cat();
 
-  return (
-    myCat.Initiate()
-  );
+
+  const cat = new Cat("Cat");
+  const tree = GetTree();
+  tree.Add(cat);
+  
+  const objects = tree.GetAll();
+  return tree.Render();
 }
 
