@@ -1,6 +1,6 @@
+import { Component } from "@/_game/engine/objects/Component";
 import React, { JSX, useEffect, useState } from "react";
 import { Image } from "react-native";
-import { IComponent } from "../objects/IComponent";
 
 // Notes:
 // "..." notation spreads the props used as an argument to the props variable (just use instead of direct assignment)  
@@ -48,14 +48,13 @@ export function AnimatedSpriteViewComponent({frames, interval = 100}: {frames: S
   return <Image source={source} style={{ width, height }} resizeMode="contain" />;
 }
 
-export class SpriteRenderer implements IComponent {
+export class SpriteRenderer extends Component {
   spriteProps: SpriteProps;
 
   constructor(name: string, spriteProps: SpriteProps) {
-    this.name = name;
+    super(name);
     this.spriteProps = { ...spriteProps };
   }
-  name: string;
 
   Render(): JSX.Element {
     const { source, width, height } = this.spriteProps;
@@ -63,13 +62,12 @@ export class SpriteRenderer implements IComponent {
   }
 }
 
-export class AnimatedSpriteRenderer implements IComponent {
-  name: string;
+export class AnimatedSpriteRenderer extends Component {
   animations: Record<string, AnimationProps>;
   currentAnimationKey: string;
 
   constructor(name: string, props: AnimatedSpriteRendererProps) {
-    this.name = name;
+    super(name);
     this.animations = { ...props.animations }; 
     if (props.defaultAnimation) this.currentAnimationKey = props.defaultAnimation;
     else {this.currentAnimationKey = Object.keys(props.animations)[0]}

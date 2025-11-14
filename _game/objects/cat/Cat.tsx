@@ -3,7 +3,7 @@
 import { AnimatedSpriteRenderer, AnimationProps } from "@/_game/engine/animation/Animations";
 import { BoxCollision } from "@/_game/engine/collisions/Collisions";
 import { GameObject } from "@/_game/engine/objects/GameObject";
-import { StyleSheet } from "react-native";
+import { createGameObjectStyle, GameObjectStyle, getDimensions } from "@/_game/styles/Styles";
 
 const sleepFrames: AnimationProps = {
   frames: [
@@ -21,27 +21,28 @@ const spriteRenderer = new AnimatedSpriteRenderer("CatSpriteRenderer", {
   defaultAnimation: "sleep"
 });
 
-const collisionComponent = new BoxCollision({
+const collisionComponent = new BoxCollision("catCollision", {
   name: "CatCollision",
-  x: 100,
-  y: 100,
+  sizeX: 100,
+  sizeY: 100,
   xOffset: 0,
   yOffset: 0,
-  isTrigger: false
+  onCollisionEntered: (collider) => {
+  }
 })
 
-const catStyle = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
+const catStyle: GameObjectStyle = createGameObjectStyle({
+  width: 233,
+  height: 165,
+  left: getDimensions().width / 2 - 233 / 2,
+  top: getDimensions().height / 2 - 165 / 2,
 });
 
 export class Cat extends GameObject {
   constructor(name: string) {
-    super(name, catStyle);
+    super(name, 233, 165, catStyle);
     this.AddComponent(spriteRenderer);
     this.AddComponent(collisionComponent);
   }
 }
+

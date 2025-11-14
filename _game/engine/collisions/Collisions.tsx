@@ -1,38 +1,42 @@
 
 // System detekcji kolizji w programie.
 
+import { Component } from "@/_game/engine/objects/Component";
 import { JSX } from "react";
 import { View } from "react-native";
 import { useFrameCallback } from "react-native-reanimated";
 import { GameObject } from "../objects/GameObject";
-import { IComponent } from "../objects/IComponent";
 import { GetTree } from "../objects/ObjectTree";
-
 
 export type CollisionProps = {
 name: string, 
-x: number,
-y: number,
+sizeX: number,
+sizeY: number,
 xOffset: number, 
 yOffset: number, 
-isTrigger: boolean,
+onCollisionEntered?: (collider: BoxCollision) => void;
+onCollisionExited?: (collider: BoxCollision) => void;
 }
 
-export class BoxCollision implements IComponent {
+export class BoxCollision extends Component {
     sizeX: number;
     sizeY: number;
     offsetX: number;
     offsetY: number;
     name: string;
-    isTrigger: boolean;
+    onCollisionEntered?: (collider: BoxCollision) => void;
+    onCollisionExited?: (collider: BoxCollision) => void;
 
-    constructor(collisionProps: CollisionProps) {
-        this.sizeX = collisionProps.x;
-        this.sizeY = collisionProps.y;
-        this.offsetX = collisionProps.xOffset;
-        this.offsetY = collisionProps.yOffset
-        this.name = collisionProps.name;
-        this.isTrigger = collisionProps.isTrigger;
+
+    constructor(name: string, collisionProps: CollisionProps) {
+      super(name);
+      this.sizeX = collisionProps.sizeX;
+      this.sizeY = collisionProps.sizeY;
+      this.offsetX = collisionProps.xOffset;
+      this.offsetY = collisionProps.yOffset
+      this.name = collisionProps.name;
+      this.onCollisionEntered = collisionProps.onCollisionEntered;
+      this.onCollisionExited = collisionProps.onCollisionExited;
     }
 
 
@@ -46,7 +50,7 @@ export class BoxCollision implements IComponent {
 }
 
 useFrameCallback(() => {
-    CheckCollisions();
+  CheckCollisions();
 })
 
 class CollisionParams {
@@ -60,25 +64,26 @@ class CollisionParams {
 }
 
 function CheckCollision(a: CollisionParams, b: CollisionParams): boolean {
-    const aPos = a.gameObject.style.position;
-    const bPos = b.gameObject.style.position;
+  // Get numeric positions
+  const aPos = { x: a.gameObject.style.left ?? 0, y: a.gameObject.style.top ?? 0 };
+  const bPos = { x: b.gameObject.style.left ?? 0, y: b.gameObject.style.top ?? 0 };
 
-    const aCol = a.collisionComponent;
-    const bCol = b.collisionComponent;
+  const aCol = a.collisionComponent;
+  const bCol = b.collisionComponent;
 
-    const aMin = { x: aPos.x + aCol.offsetX, y: aPos.y + aCol.offsetY };
-    const aMax = { x: aMin.x + aCol.sizeX, y: aMin.y + aCol.sizeY };
+  const aMin = { x: aPos.x + aCol.offsetX, y: aPos.y + aCol.offsetY };
+  const aMax = { x: aMin.x + aCol.sizeX, y: aMin.y + aCol.sizeY };
 
-    const bMin = { x: bPos.x + bCol.offsetX, y: bPos.y + bCol.offsetY };
-    const bMax = { x: bMin.x + bCol.sizeX, y: bMin.y + bCol.sizeY };
+  const bMin = { x: bPos.x + bCol.offsetX, y: bPos.y + bCol.offsetY };
+  const bMax = { x: bMin.x + bCol.sizeX, y: bMin.y + bCol.sizeY };
 
-    return (
-      aMin.x < bMax.x &&
-      aMax.x > bMin.x &&
-      aMin.y < bMax.y &&
-      aMax.y > bMin.y
-    );
-  }
+  return (
+    aMin.x < bMax.x &&
+    aMax.x > bMin.x &&
+    aMin.y < bMax.y &&
+    aMax.y > bMin.y
+  );
+}
 
 
 
