@@ -1,45 +1,48 @@
-import React, { useEffect } from "react";
-import Animated, { useAnimatedStyle, useSharedValue, withRepeat, withSpring } from "react-native-reanimated";
-import { SpringConfig } from "react-native-reanimated/lib/typescript/animation/spring";
+import React from "react";
+import Animated, { useAnimatedStyle, useSharedValue, withRepeat, withTiming, WithTimingConfig } from "react-native-reanimated";
 import { Script } from "../engine/scripts/Script";
+
+export type BobConfig = WithTimingConfig & {
+  offsetTop: number;
+};
 
 export class Bob extends Script {
 
+    
   gameObject = this.GetGameObject();
-  config: SpringConfig;
+  config: BobConfig;
+
   style = this.gameObject?.style;
 
-  constructor(name:string, config: SpringConfig) {
+  constructor(name:string, config: BobConfig) {
     super(name);
     this.config = config;
 
-this.GameObjectRenderOverride = () => {
-  const initialY = typeof this.gameObject?.style.top === "number" ? (this.gameObject!.style.top as number) : 0;
-  const AnimatedComponent: React.FC = () => {
+    this.GameObjectRenderOverride = () => {
+    const initialY = (this.gameObject!.style.top as number);
+    const AnimatedComponent: React.FC = () => {
     const translateY = useSharedValue(initialY);
 
-    useEffect(() => {
-      translateY.value = withRepeat(
-        withSpring(initialY + 50, this.config),
-        -1,
-        true
-      );
-    }, []);
+    translateY.value = withRepeat(
+      withTiming(initialY + config.offsetTop, this.config),
+      -1,
+      true
+    );
 
     const animatedStyle = useAnimatedStyle(() => ({
       transform: [{ translateY: translateY.value }]
     }));
 
     return (
-      <Animated.View style={[this.gameObject!.style, animatedStyle]}>
-        {this.gameObject?.RenderComponents()}
-        {this.gameObject?.RenderChildren()}
+      <Animated.View style={[this.gameObject.style, animatedStyle]}>
+        {this.gameObject.RenderComponents()}
+        {this.gameObject.RenderChildren()}
       </Animated.View>
     );
   };
 
-  return <AnimatedComponent />;
-};
+  return <AnimatedComponent/>;
+  };
 };
 
 }

@@ -7,13 +7,13 @@ import { Script } from "../scripts/Script";
 export default function GameScene() {
   const objectTree = GetTree();
   
-  useEffect(() => {
-    StartAll(objectTree);
-  }, [])
+    useEffect(() => {
+        StartAll(objectTree);
+    }, [])
 
-useFrameCallback(() => {
-    UpdateAll(objectTree);
-})
+    useFrameCallback(() => {
+        UpdateAll(objectTree);
+    })
 
   return objectTree.Render();
 }

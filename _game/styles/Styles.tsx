@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { ViewStyle } from "react-native";
 
 export type GameObjectStyle = ViewStyle & {
@@ -7,8 +6,8 @@ export type GameObjectStyle = ViewStyle & {
     right: number,
     top?: number,
 }
-export type StyleOverrides = Partial<GameObjectStyle>
 
+export type StyleOverrides = Partial<GameObjectStyle>
 
 export const defaultStyles: GameObjectStyle = {
     position: "absolute" as const,
@@ -35,28 +34,3 @@ export const createGameObjectStyle = (
     return mergeStyles(defaultStyles, overrides)
 }
 
-
-export function getDimensions() {
-
-  const [dimensions, setDimensions] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
-
-  useEffect(() => {
-    function handleResize() {
-      setDimensions({
-    width: window.innerWidth,
-    height: window.innerHeight,
-      });
-    }
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  return dimensions;
-}

@@ -1,26 +1,16 @@
 
 import { JSX } from "react";
 import { View } from "react-native";
-import { GameObject } from "./GameObject";
+import { Attachment } from "./Attachment";
 
-export abstract class Component {
-  name: string;
-  public gameObject?: GameObject;
-
+export abstract class Component extends Attachment {
   Render(): JSX.Element {
     return (<View></View>);
   }
 
-  GetGameObject(): GameObject | undefined {
-    if (this.gameObject) return this.gameObject
-    else return undefined;
-  }
-
   constructor(name: string) {
-    this.name = name;
+    super(name);
   }
-
-  GameObjectRenderOverride?: () => JSX.Element;
 }
 
 
