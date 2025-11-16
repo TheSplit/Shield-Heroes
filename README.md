@@ -22,7 +22,7 @@
 
 ## 🍃 Gra
 
-| ![Cat1](https://cdn.discordapp.com/attachments/1233112010963550299/1439707885490798723/cat_balthazar.png?ex=691b7ff4&is=691a2e74&hm=93c7351c31e702d91b90bcda139b88a5856ec2d6d7eae33c533421dbcff5d6ae&) | # Chroń kotka przed zagrożeniami! | ![Cat2](https://cdn.discordapp.com/attachments/1233112010963550299/1439707884916052051/cat_bounty.png?ex=691b7ff4&is=691a2e74&hm=3f84c1fe3e25b90c97016eccc60548add37dc4af00c456d2a1b64f8f316b7bc9&) |
+| ![Cat1](https://cdn.discordapp.com/attachments/1233112010963550299/1439707885490798723/cat_balthazar.png?ex=691b7ff4&is=691a2e74&hm=93c7351c31e702d91b90bcda139b88a5856ec2d6d7eae33c533421dbcff5d6ae&) | <span style="font-size:24px; font-weight:bold;">Chroń kotka przed zagrożeniami!</span> | ![Cat2](https://cdn.discordapp.com/attachments/1233112010963550299/1439707884916052051/cat_bounty.png?ex=691b7ff4&is=691a2e74&hm=3f84c1fe3e25b90c97016eccc60548add37dc4af00c456d2a1b64f8f316b7bc9&) |
 |:--------------------------------------:|:-----------------------------:|:------------------------------------:|
 
 
@@ -43,3 +43,13 @@
 - Broń wymagające szóstego zmysłu zmyślne połączenia rzucajek.
 
 ![Defend](https://cdn.discordapp.com/attachments/1233112010963550299/1439712698681262234/cat_defend.png?ex=691b846f&is=691a32ef&hm=fb9ee3802205bfa3ac36401f1eb9f9e5ca13516dad00c9eddd6f93091453e954&)
+
+## 🪼 Uruchamianie
+
+- Pobierz repozytorium w formie zip.
+
+- Użyj komendy:  
+
+> npx expo start
+
+- Testowane: Android 11
