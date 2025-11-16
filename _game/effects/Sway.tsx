@@ -6,7 +6,7 @@ export type BobConfig = WithTimingConfig & {
   offsetTop: number;
 };
 
-export class Bob extends Script {
+export class Sway extends Script {
 
     
   gameObject = this.GetGameObject();

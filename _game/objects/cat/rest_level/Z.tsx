@@ -1,6 +1,6 @@
 // Piekny kotek ktory sobie spi :3
 
-import { Bob } from "@/_game/effects/Bob";
+import { Sway } from "@/_game/effects/Sway";
 import { SpriteProps, SpriteRenderer } from "@/_game/engine/animation/Animations";
 import { GameObject } from "@/_game/engine/objects/GameObject";
 import { Easing, ReduceMotion } from "react-native-reanimated";
@@ -14,7 +14,7 @@ export class Z extends GameObject {
     
     const spriteRenderer = new SpriteRenderer("ZSpriteRenderer", spriteProps);
 
-    const script = new Bob(
+    const script = new Sway(
         "ZBob", 
         {
      duration: 800,
