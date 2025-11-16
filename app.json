@@ -3,7 +3,7 @@
     "name": "Shield-Heroes",
     "slug": "Shield-Heroes",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "landscape",
     "jsEngine": "hermes",
     "icon": "./assets/images/icon.png",
     "scheme": "shieldheroes",

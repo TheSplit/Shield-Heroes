@@ -1,13 +1,16 @@
 
-import { useCollisionSystem } from "@/_game/engine/collisions/Collisions";
 import GameScene from "@/_game/engine/game_scene/GameScene";
 import { GetTree, ObjectTree } from "@/_game/engine/objects/ObjectTree";
 import { Background } from "@/_game/objects/background/Background";
 import { Cat } from "@/_game/objects/cat/Cat";
 import { Z } from "@/_game/objects/cat/rest_level/Z";
 import { Shadow } from "@/_game/objects/cat/shadows/Shadow";
-import { FloatingJoystick } from "@/_game/objects/joystick/FloatingJoystick";
+import {
+  FloatingJoystick
+} from "@/_game/objects/joystick/FloatingJoystick";
+import { JoystickBehaviour } from "@/_game/objects/joystick/JoystickBehaviour";
 import { Shield } from "@/_game/objects/shield/Shield";
+import { Spawner } from "@/_game/objects/spawner/Spawner";
 import { useMemo } from "react";
 import { View } from "react-native";
 
@@ -21,7 +24,7 @@ type SpawnZProps = {
 }
 
 function Prepare() {
-  useCollisionSystem();
+  // useCollisionSystem();
 }
 
 export default function HomeScreen() {
@@ -32,14 +35,16 @@ export default function HomeScreen() {
     tree.Add(new Shadow("Shadow"));
     tree.Add(new Cat("Cat"));
 
-    tree.Add(new Shield("Shield", {
+    let shield = new Shield("Shield", {
       pivotX: 0,
       pivotY: 0,
-      pivotDistance: 50,
+      radius: 200,
       rotationSpeed: 2,
       shieldAngle: 0,
       currentAngle: 0,
-    }));
+    })
+
+    tree.Add(shield);
     SpawnZs({
       tree: tree,
       initialX: 30,
@@ -50,7 +55,14 @@ export default function HomeScreen() {
     });
     const joystick = new FloatingJoystick("Joystick");
     joystick.Move(999, 990); 
+    let jb: JoystickBehaviour = joystick.GetScript("JoystickBehaviour") as JoystickBehaviour;
+    jb.ChangeShield(shield);
     tree.Add(joystick);
+
+
+    <Spawner></Spawner>
+
+
     return tree;
   }, []); 
     return (

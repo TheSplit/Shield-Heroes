@@ -20,7 +20,7 @@ export class Shadow extends GameObject {
       zIndex: -9999
     });
 
-    super(name, 260, 79, shadowStyle);
+    super({ name: name, width: 260, height: 79, style: shadowStyle});
     
     const spriteRenderer = new SpriteRenderer("CatSpriteRenderer", shadowProps);
     this.AddComponent(spriteRenderer);

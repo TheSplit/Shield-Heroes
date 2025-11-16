@@ -1,50 +1,42 @@
-# Welcome to your Expo app 👋
+# 🛡️ Shield Heroes
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+![Header](https://cdn.discordapp.com/attachments/1233112010963550299/1439698891783147582/header.png?ex=691b7794&is=691a2614&hm=02a23688db5eac91479dd58de90fd73387254db5c0c19114c5586f7bbc01eb63&)
 
-## Get started
+## 🐛 Technikalia
 
-1. Install dependencies
+![Technikalia](https://cdn.discordapp.com/attachments/1233112010963550299/1439706787858350253/Sprite-0001.png?ex=691b7eee&is=691a2d6e&hm=5fb9c38e6b42229eeb05d6d6b9c5802d3fc0d76fe4665f628268010eaa017465&)
 
-   ```bash
-   npm install
-   ```
+- Shield Heroes to gra stworzona w środowisku react native, korzystająca z własnego silnika do zarządzania obiektami, skryptami i animacjami. 
 
-2. Start the app
+- Złożona jest ona z własnego systemu komponentów, skryptów i gameobjectów inspirowanego silnikiem **Unity**. Gra zbudowana jest na podstawie modułów takich jak:  
+> ObjectTree.tsx
+> Gameobject.tsx
+> Script.tsx
+> Component.tsx
+> Animations.tsx
 
-   ```bash
-   npx expo start
-   ```
+- Gra bazowana jest na takich komponentach jak AnimatedSpriteViewComponent, pozwalających na dynamiczne animacje. Popatrz tylko na tego kotka!
+![Cat](https://cdn.discordapp.com/attachments/1233112010963550299/1439704369577853159/ezgif-2119ca9f0ae50f46.gif?ex=691b7cae&is=691a2b2e&hm=230e79f8db0acd89621907cc7e45976b8101070683a3e64ce01323f22b156f31&)
 
-In the output, you'll find options to open the app in a
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 🍃 Gra
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+| ![Cat1](https://cdn.discordapp.com/attachments/1233112010963550299/1439707885490798723/cat_balthazar.png?ex=691b7ff4&is=691a2e74&hm=93c7351c31e702d91b90bcda139b88a5856ec2d6d7eae33c533421dbcff5d6ae&) | ### Chroń kotka przed zagrożeniami! | ![Cat2](https://cdn.discordapp.com/attachments/1233112010963550299/1439707884916052051/cat_bounty.png?ex=691b7ff4&is=691a2e74&hm=3f84c1fe3e25b90c97016eccc60548add37dc4af00c456d2a1b64f8f316b7bc9&) |
 
-## Get a fresh project
+- Broń śpiącego kota przed siłami natury obracając tarczą w ośmiu kierunkach! 
 
-When you're ready, run:
+- Używaj przycisku "reverse" do do natychmiastowego obrotu tarczy o 180°, broniąc się przed cięższymi atakami próbującymi atakować się od pleców. 
 
-```bash
-npm run reset-project
-```
+- Omijaj różnorakie przeszkody takie jak:
+   - Liście
+   - Bordowe liście wymagające uderzenia od wewnątrz
+   - Pioruny
+   - Skaczące od miejsca do miejsca do miejsca kasztany
+   - Przeskakujące na przeciwną stronę skrzydlaki
+   - ...i więcej!
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+- Strzeż kotka przed obudzeniem. Wstanie on po trzech trafieniach.
 
-## Learn more
+- Broń wymagające szóstego zmysłu zmyślne połączenia rzucajek.
 
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- ![Defend](https://cdn.discordapp.com/attachments/1233112010963550299/1439712698681262234/cat_defend.png?ex=691b846f&is=691a32ef&hm=fb9ee3802205bfa3ac36401f1eb9f9e5ca13516dad00c9eddd6f93091453e954&)

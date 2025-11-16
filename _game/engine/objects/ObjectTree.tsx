@@ -37,7 +37,7 @@ export class ObjectTree {
     justifyContent: 'center', 
       }}>
           {gameObjects.map((obj) => (
-            <View key={obj.name}>
+            <View key={obj.id} style={{position: "relative"}}>
               {obj.Render()} 
             </View>
           ))}

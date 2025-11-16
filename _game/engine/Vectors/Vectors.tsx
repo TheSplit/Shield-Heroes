@@ -47,4 +47,9 @@ export class Vector2 {
   const cosTheta = dot / (lenA * lenB);
   return Math.acos(Math.min(Math.max(cosTheta, -1), 1));
     } 
+
+    angleTo(target: Vector2): number {
+    const dir = this.directionTo(target);
+    return Math.atan2(dir.y, dir.x);
+  }
 }

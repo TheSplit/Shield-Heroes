@@ -1,56 +1,55 @@
 
 import { SpriteProps, SpriteRenderer } from "@/_game/engine/animation/Animations";
 import { GameObject } from "@/_game/engine/objects/GameObject";
-import Animated from "react-native-reanimated";
+import { ShieldAngle } from "@/_game/engine/utils/Angles";
+import { Vector2 } from "@/_game/engine/vectors/Vectors";
+import { shieldAngleToDir } from './../../engine/utils/Angles';
 
-const spriteProps: SpriteProps = { source: require("@/_game/objects/shield/shield.png"), width: 71, height: 36 };
+const spriteProps: SpriteProps = { source: require("@/_game/objects/shield/shield.png"), width: 36, height: 71 };
 
 type ShieldProps = { 
     pivotX: number;
     pivotY: number;
-    pivotDistance: number;
+    radius: number;
     rotationSpeed: number;
     shieldAngle: ShieldAngle;
     currentAngle: number;
 };
 
-enum ShieldAngle
-{
-    Right,
-    TopRight,
-    Top,
-    TopLeft,
-    Left,
-    BottomLeft,
-    Bottom,
-    BottomRight
-}
-
-const AngleMap: Record<number, ShieldAngle> = {
-  0: ShieldAngle.Right,
-  45: ShieldAngle.TopRight,
-  90: ShieldAngle.Top,
-  135: ShieldAngle.TopLeft,
-  180: ShieldAngle.Left,
-  225: ShieldAngle.BottomLeft,
-  270: ShieldAngle.Bottom,
-  315: ShieldAngle.BottomRight,
-};
-
 
 export class Shield extends GameObject {
 
-  constructor(name: string, ShieldProps: ShieldProps) {
+    props: ShieldProps;
 
-    super(name, 200, 200, undefined, Animated.View);
+ChangeAngle(angle: ShieldAngle | Vector2) {
+
+  let dir: Vector2;
+
+  if (angle instanceof Vector2) {
+    dir = angle.normalize();
+  } else {
+    dir = shieldAngleToDir(angle);
+    this.props.shieldAngle = angle;
+  }
+  const pos = new Vector2(
+    this.props.pivotX + dir.x * this.props.radius,
+    this.props.pivotY + dir.y * this.props.radius
+  );
+  this.Move(pos.x, pos.y);
+  this.RotateTo(new Vector2(this.props.pivotX, this.props.pivotY));
+}
+
+  constructor(name: string, props: ShieldProps) {
+
+    super({name: name, width: 36, height: 71});
+
+    this.props = props;
 
     const spriteRenderer = new SpriteRenderer("ShieldSpriteRenderer", spriteProps);
     
     this.AddComponent(spriteRenderer);
 
-    this.Move(ShieldProps.pivotX, ShieldProps.pivotY - ShieldProps.pivotDistance);
-
-    
+    this.ChangeAngle(ShieldAngle.Bottom);
 
   }
 }

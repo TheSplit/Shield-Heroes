@@ -1,0 +1,10 @@
+{
+  "spawn": [
+    {
+      "type": "leaf",
+      "angle": 0,
+      "speed": 2,
+      "delay": 0
+    }
+  ]
+}

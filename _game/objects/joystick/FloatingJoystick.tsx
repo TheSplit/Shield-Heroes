@@ -16,7 +16,11 @@ export class FloatingJoystick extends GameObject {
 
   constructor(name: string, props: JoystickProps = { radius: 128 }) {
 
-    super(name, 256, 256);
+    super({
+      name: name, 
+      width: 256,
+      height: 256,
+  });
     this.props = props;
 
     const joystickSpriteRenderer = new SpriteRenderer("BorderSpriteRenderer", joystickProps);

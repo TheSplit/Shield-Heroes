@@ -3,14 +3,14 @@
 import { Bob } from "@/_game/effects/Bob";
 import { SpriteProps, SpriteRenderer } from "@/_game/engine/animation/Animations";
 import { GameObject } from "@/_game/engine/objects/GameObject";
-import Animated, { Easing, ReduceMotion } from "react-native-reanimated";
+import { Easing, ReduceMotion } from "react-native-reanimated";
 
 const spriteProps: SpriteProps = { source: require("@/_game/objects/cat/rest_level/z.png"), width: 50, height: 50 };
 
 export class Z extends GameObject {
   constructor(name: string) {
 
-    super(name, 50, 50, undefined);
+    super({name: name,width: 50,height: 50});
     
     const spriteRenderer = new SpriteRenderer("ZSpriteRenderer", spriteProps);
 

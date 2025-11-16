@@ -25,7 +25,8 @@ export class Cat extends GameObject {
       
       });
 
-    super(name, 233, 165, catStyle);
+    super({
+      name: name, width: 233, height: 165, style: catStyle});
     
     const spriteRenderer = new AnimatedSpriteRenderer("CatSpriteRenderer", {
       animations: {

@@ -7,7 +7,10 @@ export class Handle extends GameObject {
 
   constructor(name: string) {
 
-    super(name, 100, 100);
+    super({
+      name: name,
+      width: 100,
+      height: 100});
 
     const handleSpriteRenderer = new SpriteRenderer("HandleSpriteRenderer", handleProps);
     

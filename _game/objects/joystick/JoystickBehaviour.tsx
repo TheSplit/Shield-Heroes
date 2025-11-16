@@ -2,10 +2,10 @@ import { GameObject } from "@/_game/engine/objects/GameObject";
 import { Script } from "@/_game/engine/scripts/Script";
 import { snapDirection } from "@/_game/engine/utils/Angles";
 import { Vector2 } from "@/_game/engine/vectors/Vectors";
-import { defaultStyles } from '@/_game/styles/Styles';
 import { JSX } from "react";
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import { Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler";
 import Animated from "react-native-reanimated";
+import { Shield } from "../shield/Shield";
 import { FloatingJoystick } from "./FloatingJoystick";
 import { Handle } from "./Handle";
 
@@ -13,6 +13,7 @@ export class JoystickBehaviour extends Script {
 
   handle: Handle;
   joystick: FloatingJoystick;
+  shield?: Shield;
 
   constructor(name:string, gameObject: GameObject) {
     super(name);
@@ -21,6 +22,8 @@ export class JoystickBehaviour extends Script {
     this.joystick = this.gameObject! as FloatingJoystick; // <- for typing
     this.joystick.Hide();
   }
+
+  ChangeShield(shield: Shield) { this.shield = shield };
 
     GameObjectRenderOverride(): JSX.Element {
       const closuredInstance = this;
@@ -41,8 +44,9 @@ export class JoystickBehaviour extends Script {
             }
 
             const snapped = snapDirection(direction);
-        
+            
             closuredInstance.handle.Move(closuredInstance.joystick.props.radius * snapped.x, closuredInstance.joystick.props.radius * snapped.y);
+            this.shield?.ChangeAngle(snapped);
 
         }).
         onEnd(() => {
@@ -50,14 +54,16 @@ export class JoystickBehaviour extends Script {
         });
 
     return (
-      <GestureDetector gesture={pan}>
-        <Animated.View style={{ flex: 1 }}>
-          {this.gameObject!.RenderComponents()}
-          <this.handle.wrapper style={defaultStyles}>
-            {this.handle.Render()}
-          </this.handle.wrapper>
-        </Animated.View>
-      </GestureDetector>
+  <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureDetector gesture={pan}>
+      <Animated.View style={this.joystick.style}>
+      {this.gameObject!.RenderComponents()}
+      <this.handle.wrapper style={this.joystick.style}>
+        {this.handle.Render()}
+      </this.handle.wrapper>
+    </Animated.View>
+  </GestureDetector>
+</GestureHandlerRootView>
     );
     };
 

@@ -3,8 +3,13 @@ import React, { JSX } from "react";
 import { View } from "react-native";
 import Animated, { useAnimatedStyle } from "react-native-reanimated";
 import { Script } from "../scripts/Script";
+import { Vector2 } from "../vectors/Vectors";
 import { Block } from "./Block";
 import { Component } from "./Component";
+
+export type GameObjectProps = {
+  name: string, width: number, height: number, style?: GameObjectStyle, wrapper?: React.ElementType, offsetByHalf?: boolean, opacity?: number
+}
 
 export class GameObject extends Block {
 
@@ -18,8 +23,19 @@ export class GameObject extends Block {
   height: number;
   visible: boolean = true;           
   opacity = { value: 1 };
+  rotation: number = 0;
 
-  constructor(name: string, width: number, height: number, style: GameObjectStyle = defaultStyles, wrapper: React.ElementType = Animated.View, offsetByHalf: boolean = true, opacity: number = 1) {
+  
+  constructor({
+    name,
+    width,
+    height,
+    style = defaultStyles,
+    wrapper = Animated.View,
+    offsetByHalf = true,
+    opacity = 1,
+  }: GameObjectProps) {
+
   super();
   this.name = name;
   this.width = width;
@@ -123,6 +139,10 @@ export class GameObject extends Block {
   return this.components.find((component) => component instanceof type) as T
   } 
 
+GetScript(name: string): Script | undefined {
+  return this.scripts.find(script => script.name === name);
+}
+
   GetAllComponentsOfType<T>(type: new (...args: any[]) => T): T[] {
   return this.components.filter((component) => component instanceof type) as T[];
 }
@@ -131,11 +151,21 @@ export class GameObject extends Block {
     return this.children.find((child) => child.name === name);
   }
 
-  GetPosition(): { x: number; y: number } {
+  GetPosition(): Vector2 {
   const style = this.style;
-  return {
-    x: (this.style.left as number),
-    y: (this.style.top as number)
-  };
+  return new Vector2(this.style.left as number, this.style.top as number) }
+
+RotateTo(target: Vector2) {
+  const pos = this.GetPosition();
+  const dir = target.subtract(pos);
+
+  const angleRad = Math.atan2(dir.y, dir.x);
+  const angleDeg = angleRad * (180 / Math.PI);
+
+  this.rotation = angleDeg;
+
+  this.style.transform = [
+    { rotate: `${angleDeg}deg` }
+  ];
 }
 }
