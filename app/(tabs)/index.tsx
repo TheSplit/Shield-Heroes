@@ -1,11 +1,15 @@
 
+import { useCollisionSystem } from "@/_game/engine/collisions/Collisions";
 import GameScene from "@/_game/engine/game_scene/GameScene";
 import { GetTree, ObjectTree } from "@/_game/engine/objects/ObjectTree";
+import { Background } from "@/_game/objects/background/Background";
 import { Cat } from "@/_game/objects/cat/Cat";
 import { Z } from "@/_game/objects/cat/rest_level/Z";
+import { Shadow } from "@/_game/objects/cat/shadows/Shadow";
 import { FloatingJoystick } from "@/_game/objects/joystick/FloatingJoystick";
 import { Shield } from "@/_game/objects/shield/Shield";
 import { useMemo } from "react";
+import { View } from "react-native";
 
 type SpawnZProps = {
   tree: ObjectTree, 
@@ -16,10 +20,18 @@ type SpawnZProps = {
   times: number;
 }
 
+function Prepare() {
+  useCollisionSystem();
+}
+
 export default function HomeScreen() {
-  const tree = useMemo(() => {
+  Prepare();
+  const tree: ObjectTree = useMemo(() => {
     const tree = GetTree();
+    
+    tree.Add(new Shadow("Shadow"));
     tree.Add(new Cat("Cat"));
+
     tree.Add(new Shield("Shield", {
       pivotX: 0,
       pivotY: 0,
@@ -36,12 +48,17 @@ export default function HomeScreen() {
       difY: 7,
       times: 3,
     });
-    const joystick = new FloatingJoystick("Joystick", { radius: 128 });
-    joystick.Move(50, 300); 
-    tree.Add(joystick);w
+    const joystick = new FloatingJoystick("Joystick");
+    joystick.Move(999, 990); 
+    tree.Add(joystick);
     return tree;
-  }, []); // Do only once (no dependenc.)
-  return <GameScene/> // Add the whole game scene - will call update and start functions, do all the functionality, etc
+  }, []); 
+    return (
+    <View style={{ flex: 1 }}>
+      <Background />
+      <GameScene tree={tree} />
+    </View>
+  );
 }
 
 function SpawnZs(props: SpawnZProps) {

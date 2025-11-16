@@ -22,6 +22,7 @@ export class Cat extends GameObject {
       height: 165,
       left: 0,
       top: 0,
+      
       });
 
     super(name, 233, 165, catStyle);

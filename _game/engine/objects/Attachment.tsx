@@ -1,9 +1,10 @@
 import { JSX } from "react";
 import { Block } from "./Block";
+import { GameObject } from "./GameObject";
 
 export abstract class Attachment extends Block {
   name: string;
-  gameObject?: any;
+  gameObject?: GameObject;
 
   constructor(name: string) {
     super();

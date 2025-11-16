@@ -49,9 +49,11 @@ export class BoxCollision extends Component {
     CollisionExited(object: BoxCollision) {}
 }
 
-useFrameCallback(() => {
-  CheckCollisions();
-})
+export function useCollisionSystem() {
+  useFrameCallback(() => {
+    CheckCollisions();
+  });
+}
 
 class CollisionParams {
     gameObject: GameObject;

@@ -1,47 +1,64 @@
+import { GameObject } from "@/_game/engine/objects/GameObject";
 import { Script } from "@/_game/engine/scripts/Script";
 import { snapDirection } from "@/_game/engine/utils/Angles";
-import { Vector2 } from "@/_game/engine/Vectors/Vectors";
+import { Vector2 } from "@/_game/engine/vectors/Vectors";
+import { defaultStyles } from '@/_game/styles/Styles';
 import { JSX } from "react";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import Animated from "react-native-reanimated";
 import { FloatingJoystick } from "./FloatingJoystick";
 import { Handle } from "./Handle";
 
 export class JoystickBehaviour extends Script {
 
-  gameObject = this.GetGameObject();
-    handle: Handle;
-    joystick: FloatingJoystick;
+  handle: Handle;
+  joystick: FloatingJoystick;
 
-  constructor(name:string) {
+  constructor(name:string, gameObject: GameObject) {
     super(name);
-    this.handle = this.gameObject;
-    this.joystick = this.gameObject.GetChildByName("JoystickHandle");
+    this.gameObject = gameObject;
+    this.handle = this.gameObject!.GetChild("JoystickHandle") as Handle;
+    this.joystick = this.gameObject! as FloatingJoystick; // <- for typing
+    this.joystick.Hide();
   }
 
     GameObjectRenderOverride(): JSX.Element {
+      const closuredInstance = this;
         const pan = Gesture.Pan()
+        .onBegin((e) => {
+            closuredInstance.joystick.Show();
+            closuredInstance.joystick.Move(e.translationX, e.translationY);
+        })
         .onUpdate((e) => {
-            const handleV = new Vector2(this.handle.GetPosition().x, this.handle.GetPosition().y);
+            const handleV = new Vector2(closuredInstance.handle.GetPosition().x, closuredInstance.handle.GetPosition().y);
             const touchV = new Vector2(e.translationX, e.translationY);
             const distance = handleV.distanceTo(touchV);
             const direction = handleV.directionTo((touchV), true);
-            if (distance > this.joystick.props.radius) { 
-                handleV.x *= this.joystick.props.radius;
-                handleV.y *= this.joystick.props.radius;
-                this.handle.Move(handleV.x, handleV.y);
+            if (distance > closuredInstance.joystick.props.radius) { 
+                handleV.x *= closuredInstance.joystick.props.radius;
+                handleV.y *= closuredInstance.joystick.props.radius;
+                closuredInstance.handle.Move(handleV.x, handleV.y);
             }
 
             const snapped = snapDirection(direction);
         
-            this.handle.Move(this.joystick.props.radius * snapped.x, this.joystick.props.radius * snapped.y);
+            closuredInstance.handle.Move(closuredInstance.joystick.props.radius * snapped.x, closuredInstance.joystick.props.radius * snapped.y);
+
+        }).
+        onEnd(() => {
+            closuredInstance.joystick.Hide();
         });
 
-        return (
-            <GestureDetector gesture={pan}>
-                {this.gameObject.RenderComponents()}
-                {this.gameObject.RenderChildren()}
-            </GestureDetector>
-        );
+    return (
+      <GestureDetector gesture={pan}>
+        <Animated.View style={{ flex: 1 }}>
+          {this.gameObject!.RenderComponents()}
+          <this.handle.wrapper style={defaultStyles}>
+            {this.handle.Render()}
+          </this.handle.wrapper>
+        </Animated.View>
+      </GestureDetector>
+    );
     };
 
 }

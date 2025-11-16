@@ -1,27 +1,25 @@
 
-import { GetTree, ObjectTree } from "@/_game/engine/objects/ObjectTree";
-import { useEffect } from "react";
-import { useFrameCallback } from "react-native-reanimated";
+import { ObjectTree } from "@/_game/engine/objects/ObjectTree";
+import { FrameInfo } from "react-native-reanimated";
 import { Script } from "../scripts/Script";
 
-export default function GameScene() {
-  const objectTree = GetTree();
+export default function GameScene({tree}: {tree: ObjectTree}) {
   
-    useEffect(() => {
-        StartAll(objectTree);
-    }, [])
+//   useEffect(() => {
+//     StartAll(tree);
+//   }, [])
 
-    useFrameCallback(() => {
-        UpdateAll(objectTree);
-    })
+//     useFrameCallback((frameInfo) => {
+//         UpdateAll(tree, frameInfo);
+//     })
 
-  return objectTree.Render();
+  return tree.Render();
 }
 
-export function UpdateAll(tree: ObjectTree) {
+export function UpdateAll(tree: ObjectTree,  frameInfo: FrameInfo) {
     tree.GetAll().forEach(element => {
         element.GetAllComponentsOfType(Script).forEach((script) => {
-            script.Update?.();
+            script.Update?.(frameInfo);
         })
     });
 }

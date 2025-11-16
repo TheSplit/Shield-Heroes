@@ -1,5 +1,5 @@
 
-import { Vector2 } from "@/_game/engine/Vectors/Vectors";
+import { Vector2 } from "@/_game/engine/vectors/Vectors";
 
 export enum ShieldAngle
 {

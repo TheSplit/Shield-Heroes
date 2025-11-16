@@ -1,6 +1,7 @@
 import { defaultStyles, GameObjectStyle } from "@/_game/styles/Styles";
 import React, { JSX } from "react";
 import { View } from "react-native";
+import Animated, { useAnimatedStyle } from "react-native-reanimated";
 import { Script } from "../scripts/Script";
 import { Block } from "./Block";
 import { Component } from "./Component";
@@ -15,8 +16,10 @@ export class GameObject extends Block {
   wrapper: React.ElementType;
   width: number;
   height: number;
+  visible: boolean = true;           
+  opacity = { value: 1 };
 
-  constructor(name: string, width: number, height: number, style: GameObjectStyle = defaultStyles, wrapper: React.ElementType = View, offsetByHalf: boolean = true) {
+  constructor(name: string, width: number, height: number, style: GameObjectStyle = defaultStyles, wrapper: React.ElementType = Animated.View, offsetByHalf: boolean = true, opacity: number = 1) {
   super();
   this.name = name;
   this.width = width;
@@ -27,14 +30,29 @@ export class GameObject extends Block {
   }
   this.style = { ...style }; // <- Creates an unique copy for the gameobject
   this.wrapper = wrapper;
+  this.opacity.value = opacity;
   }
 
+
+  Show() {
+    this.visible = true;
+    this.opacity.value = 1; 
+  }
+
+  Hide() {
+    this.opacity.value = 0; 
+    this.visible = false;
+  }
 
   Render(): JSX.Element {
     const override = this.scripts.find(script => script.GameObjectRenderOverride);
     if (override && override.GameObjectRenderOverride) return override.GameObjectRenderOverride();  
+    const opacity = this.opacity;
+    const animatedStyle = useAnimatedStyle(() => ({
+      opacity: opacity.value
+    }));
     return (
-    <this.wrapper style={this.style}>
+    <this.wrapper style={[this.style, animatedStyle]}>
       {this.RenderComponents()}
       {this.RenderChildren()}
     </this.wrapper>
@@ -42,11 +60,11 @@ export class GameObject extends Block {
   }
 
   RenderChildren(): React.ReactNode {
-    return this.children.map((child, i) => <React.Fragment key={child.id}>{child.Render()}</React.Fragment>);
+    return this.children.map((child, i) => <child.wrapper key={child.id}>{child.Render()}</child.wrapper>);
   }
 
   RenderComponents(): React.ReactNode {
-  return this.components.map((comp, i) => <React.Fragment key={comp.id}>{comp.Render()}</React.Fragment>);
+  return this.components.map((comp, i) => <View key={comp.id}>{comp.Render()}</View>);
 }
 
   Move(x: number, y: number) {
@@ -77,6 +95,9 @@ export class GameObject extends Block {
 
   AddScript(script: Script) {
     script.Attach(this);
+    if (this.wrapper !== Animated.View) { 
+      console.warn("Scripts' Update() method requires the wrapper to be of Animated.View type to work properly. Use GameObjectRenderOverride to override the render.");
+    }
     this.scripts.push(script);
   }
 
@@ -105,6 +126,10 @@ export class GameObject extends Block {
   GetAllComponentsOfType<T>(type: new (...args: any[]) => T): T[] {
   return this.components.filter((component) => component instanceof type) as T[];
 }
+
+  GetChild(name: string): GameObject | undefined {
+    return this.children.find((child) => child.name === name);
+  }
 
   GetPosition(): { x: number; y: number } {
   const style = this.style;

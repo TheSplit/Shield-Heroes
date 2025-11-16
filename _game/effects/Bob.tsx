@@ -34,9 +34,9 @@ export class Bob extends Script {
     }));
 
     return (
-      <Animated.View style={[this.gameObject.style, animatedStyle]}>
-        {this.gameObject.RenderComponents()}
-        {this.gameObject.RenderChildren()}
+      <Animated.View style={[this.gameObject!.style, animatedStyle]}>
+        {this.gameObject!.RenderComponents()}
+        {this.gameObject!.RenderChildren()}
       </Animated.View>
     );
   };
