@@ -15,7 +15,7 @@
 > Component.tsx  
 > Animations.tsx
 
-- Gra bazowana jest na takich komponentach jak AnimatedSpriteViewComponent, pozwalających na dynamiczne animacje. Popatrz tylko na tego kotka!  
+- Gra bazowana jest na takich komponentach jak **AnimatedSpriteViewComponent**, pozwalających na dynamiczne animacje. Popatrz tylko na tego kotka!  
 
 ![Cat](https://cdn.discordapp.com/attachments/1233112010963550299/1439704369577853159/ezgif-2119ca9f0ae50f46.gif?ex=691b7cae&is=691a2b2e&hm=230e79f8db0acd89621907cc7e45976b8101070683a3e64ce01323f22b156f31&)
 
@@ -28,7 +28,7 @@
 
 - Broń śpiącego kota przed siłami natury obracając tarczą w ośmiu kierunkach! 
 
-- Używaj przycisku "reverse" do do natychmiastowego obrotu tarczy o 180°, broniąc się przed cięższymi atakami próbującymi atakować się od pleców. 
+- Używaj przycisku "reverse" do do natychmiastowego obrotu tarczy o 180°, broniąc się przed cięższymi atakami próbującymi atakować od pleców. 
 
 - Omijaj różnorakie przeszkody takie jak:
    - Liście
